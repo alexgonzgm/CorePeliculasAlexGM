@@ -21,6 +21,7 @@ namespace CorePeliculasAlexGM.Models
         public string Actores { get; set; }
         public string Director { get; set; }
         public int Precio { get; set; }
+        public string YouTube { get; set; }
         public string EnlaceVideo { get; set; }
     }
 }
