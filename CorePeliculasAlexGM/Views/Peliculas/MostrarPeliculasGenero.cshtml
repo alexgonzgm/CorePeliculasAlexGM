@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CorePeliculasAlexGM.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "MostrarPeliculasGenero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Todas las pélicuas de @ViewData["GENERO"] </h1>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+           
+
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Estreno)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Director)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+           
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Estreno)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Director)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+           
+            <td>
+                <img class="img-thumbnail" style="width:200px;height:150px;" src="~/images/@item.Foto" />
+            </td>
+            <td>
+
+                <a class="btn btn-info" asp-controller="Peliculas" asp-action="Details" asp-route-idpelicula="@item.IdPelicula">Detalles</a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

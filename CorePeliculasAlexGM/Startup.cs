@@ -2,9 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CorePeliculasAlexGM.Data;
+using CorePeliculasAlexGM.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -12,11 +16,30 @@ namespace MvcCore
 {
     public class Startup
     {
+        private IConfiguration Configuration;
+        public Startup(IConfiguration configuration)
+        {
+            this.Configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+            });
+
+            //CADENA CONEXION
+            string cadenaSql = this.Configuration.GetConnectionString("cadenaSql");
+
+            //DEPENDENCIAS
+            services.AddTransient<IRepositoryPeliculas, RepositoryPeliculas>();
+
+            //CONTEXTO DE  DATOS 
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(cadenaSql));
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,6 +53,7 @@ namespace MvcCore
             app.UseRouting();
 
             app.UseStaticFiles();
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

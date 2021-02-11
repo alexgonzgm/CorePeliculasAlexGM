@@ -1,5 +1,4 @@
-﻿
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -15,8 +14,12 @@
     <!-- Custom styles for this template -->
     <link href="~/css/jumbotron.css" rel="stylesheet" />
 </head>
-
 <body>
+    @{ 
+        List<int> idpeliculas = 
+            Context.Session.GetObject<List<int>>("IDS");
+       
+    }
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -27,41 +30,45 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
+
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ejemplos</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item"
-                           asp-controller="Home"
-                           asp-action="Index">Casa</a>
-                    </div>
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Géneros</a>
+                    @await Component.InvokeAsync("MenuGeneros")
                 </li>
+
+
+
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+
         </div>
+        @if (idpeliculas != null )
+        {
+            <div class="nav-link align-content-sm-end bg-white">
+                <label style="color:red">Carrito : </label>
+                <label style="color:aqua">@idpeliculas.Count() peliculas</label><br />
+                <a asp-controller="Peliculas" asp-action="Compra">Pasar a compra</a>
+            </div>
+
+
+        }
+
     </nav>
 
     <main role="main">
-
+        
+      
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron">
+           
             <div class="container">
                 @RenderBody()
             </div>
         </div>
 
         <div class="container">
-            
+
             <hr>
 
         </div> <!-- /container -->

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CorePeliculasAlexGM.Models.Pelicula>
+
+@{
+    ViewData["Title"] = "Compra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int precioTotal = 0;
+}
+
+<h1>Compra</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+          <th>
+              
+          </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+           
+            <td>
+               <img src="~/images/@item.Foto" style="width:200px ; height:200px"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem =>item.Precio)
+            </td>
+            <td>
+                <a class="btn btn-danger" asp-action="Compra" asp-route-ideliminar="@item.IdPelicula">Eliminar del carrito</a>
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>
+
+ @foreach (var item in Model)
+ {
+
+     precioTotal += Convert.ToInt32( item.Precio);
+ }
+<h3 style="color:red">Precio Total = @precioTotal</h3>
+<a></a>

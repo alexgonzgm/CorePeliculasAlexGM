@@ -1,0 +1,93 @@
+﻿@model CorePeliculasAlexGM.Models.Pelicula
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<int> sesion = Context.Session.GetObject<List<int>>("IDS");
+}
+
+<h1>Detalles de @Model.Titulo</h1>
+
+<div>
+    
+    <hr />
+    <dl class="row  ">
+       
+        <dt class = "col-sm-2 ">
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Argumento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Argumento)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Foto)
+        </dt>
+        <dd class = "col-sm-10">
+           <img src="~/images/@Model.Foto" class="img-thumbnail" />
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Fecha_Estreno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Fecha_Estreno)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Actores)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Actores)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Director)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Director)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EnlaceVideo)
+        </dt>
+        <dd class = "col-sm-10">
+            <a href="@Model.EnlaceVideo">enlace</a>
+        </dd>
+    </dl>
+</div>
+
+
+    <a class="btn btn-info" asp-action="MostrarPeliculasGenero" asp-route-idgenero="@Model.IdGenero">Vovler a la lista</a>
+
+    @if (sesion == null)
+    {
+        <a class="btn btn-success"
+           asp-action="alamcenarEnSession"
+           asp-route-idpeliculacompra="@Model.IdPelicula"
+           asp-route-idpeliculagenero="@Model.IdGenero">Comprar</a>
+    }
+    else if (sesion.Contains(Model.IdPelicula))
+    {
+        <button class="btn btn-success disabled">
+            Ya comprado
+        </button>
+    }
+    else
+    {
+        <a class="btn btn-success"
+           asp-action="alamcenarEnSession"
+           asp-route-idpeliculacompra="@Model.IdPelicula"
+           asp-route-idpeliculagenero="@Model.IdGenero">Comprar</a>
+    }
+
+
+
+    
